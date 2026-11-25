@@ -3,7 +3,7 @@
 (function () {
   const { h, rich, reveal, reg, cl } = STUDIO;
   const Q = (el, tag) => { el.dataset.qc = tag; return el; };
-  const CW = 1728, CH = 790, FLOOR = 740;
+  const CW = 1728, CH = 790, FLOOR = 690;
   function setting(c, kind) {
     c.fillStyle = '#efe9df'; c.fillRect(0, 0, CW, CH);
     c.fillStyle = '#e2d9cb'; c.fillRect(0, FLOOR - 10, CW, CH - FLOOR + 10);
@@ -23,7 +23,7 @@
     const chars = (sp.characters || []).slice(0, 2).map((ch, i) => ({
       name: ch.name, x: i === 0 ? 380 : 1350, flip: i === 0 ? 1 : -1, cols: solid(ch.color || (i === 0 ? 'blue' : 'red')),
     }));
-    const tags = chars.map(ch => { const tg = Q(h('div', { class: 'pill', text: ch.name, style: { position: 'absolute', left: ch.x - 120 + 'px', width: '240px', textAlign: 'center', top: FLOOR + 10 + 'px', background: '#fff', color: 'var(--ink)' } }), 'name'); a.append(tg); return tg; });
+    const tags = chars.map(ch => { const tg = Q(h('div', { class: 'pill', text: ch.name, style: { position: 'absolute', left: ch.x - 170 + 'px', width: '340px', textAlign: 'center', top: FLOOR + 14 + 'px', background: '#fff', color: 'var(--ink)' } }), 'name'); a.append(tg); return tg; });
     const sent = ctx.timing.sent;
     const lines = (sp.lines || []).map((ln, k) => {
       const who = ln.who || 0, ch = chars[who];
@@ -41,7 +41,7 @@
         const talking = lines.some(l => l.who === i && t >= l.s0 && t < l.talkEnd);
         const mouth = talking ? (Math.floor(t * 9 + i) % 2 ? 'o' : 'smile') : (sp.mood && sp.mood[i]) || 'smile';
         const bob = Math.sin(t * 2.2 + i * 1.7) * .006;
-        drawStick(c, { hat: 'none', belt: false, x: ch.x, y: FLOOR, s: 380, flip: ch.flip, cols: ch.cols, bob, face: { eyes: 'normal', look: [.5 * ch.flip, 0], mouth, blink: (t + i * .7) % 3.6 < .12 ? 1 : 0 },
+        drawStick(c, { hat: 'none', belt: false, x: ch.x, y: FLOOR, s: 360, flip: ch.flip, cols: ch.cols, bob, face: { eyes: 'normal', look: [.5 * ch.flip, 0], mouth, blink: (t + i * .7) % 3.6 < .12 ? 1 : 0 },
           arms: talking ? { L: [.35, -.15], R: [1.4 + Math.sin(t * 5) * .25, -.6] } : { L: [.3, -.1], R: [.3, -.1] } });
       });
       cv.style.opacity = ph(t); tags.forEach(tg => reveal(tg, ph(t)));

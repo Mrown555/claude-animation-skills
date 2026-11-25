@@ -1,0 +1,568 @@
+{
+ "id": "L01",
+ "title": "Inventory costs and the EOQ model",
+ "topics": [
+  "T1",
+  "T2",
+  "T3"
+ ],
+ "vars": {
+  "D": {
+   "value": 12000,
+   "page": 5,
+   "unit": "units per year"
+  },
+  "S": {
+   "value": 500,
+   "page": 5,
+   "unit": "rupees per order"
+  },
+  "H": {
+   "value": 30,
+   "page": 5,
+   "unit": "rupees per unit per year"
+  },
+  "WD": {
+   "value": 300,
+   "page": 5,
+   "unit": "working days per year"
+  },
+  "NUM": {
+   "expr": "2*D*S"
+  },
+  "X": {
+   "expr": "2*D*S/H"
+  },
+  "EOQ": {
+   "expr": "sqrt(2*D*S/H)"
+  },
+  "N": {
+   "expr": "D/EOQ"
+  },
+  "TBO": {
+   "expr": "WD/N"
+  },
+  "OC": {
+   "expr": "D/EOQ*S"
+  },
+  "HC": {
+   "expr": "EOQ/2*H"
+  },
+  "TC": {
+   "expr": "OC + HC"
+  },
+  "HALF": {
+   "expr": "EOQ/2"
+  }
+ },
+ "checks": [
+  {
+   "expr": "abs(EOQ - 632.46) < 0.005",
+   "note": "EOQ matches page 5"
+  },
+  {
+   "expr": "abs(N - 18.97) < 0.005",
+   "note": "N matches page 5"
+  },
+  {
+   "expr": "abs(TBO - 15.8) < 0.05",
+   "note": "time between orders matches page 5"
+  },
+  {
+   "expr": "abs(TC - 18973.67) < 0.01",
+   "note": "total cost matches page 5"
+  },
+  {
+   "expr": "abs(OC - HC) < 0.01",
+   "note": "ordering cost equals holding cost at the EOQ"
+  }
+ ],
+ "scenes": [
+  {
+   "id": "title",
+   "type": "title",
+   "source": {
+    "pages": [
+     1
+    ]
+   },
+   "kicker": "Operations Management · Unit 3 · Lesson 1 of 2",
+   "title": "Inventory costs and the EOQ model",
+   "subtitle": "How much should a business order each time?",
+   "narration": [
+    "Welcome to lesson one of Unit 3, Inventory Management.",
+    "By the end of this lesson, you will know what inventory costs a business, and how the economic order quantity tells you exactly how much to order each time."
+   ]
+  },
+  {
+   "id": "inventory",
+   "type": "concept",
+   "source": {
+    "pages": [
+     3
+    ]
+   },
+   "term": "Inventory",
+   "definition": "The stock of materials a firm holds to meet future demand.",
+   "gloss": "Everything a business keeps on its shelves so it can serve customers tomorrow.",
+   "points": [
+    {
+     "text": "Raw materials",
+     "at": 2
+    },
+    {
+     "text": "Work-in-progress (WIP)",
+     "at": 2,
+     "delay": 1.2
+    },
+    {
+     "text": "Finished goods",
+     "at": 2,
+     "delay": 2.4
+    },
+    {
+     "text": "MRO supplies: maintenance, repair and operating items",
+     "at": 3
+    }
+   ],
+   "glossAt": 1,
+   "narration": [
+    "Let's start with the basic idea. Your notes define inventory as the stock of materials a firm holds to meet future demand.",
+    "In simple words, it is everything a business keeps on its shelves so that it can serve customers tomorrow.",
+    "It comes in four forms: raw materials, work in progress, and finished goods.",
+    "The fourth is M R O supplies, which means maintenance, repair and operating items, like spare parts and cleaning material."
+   ]
+  },
+  {
+   "id": "costs",
+   "type": "bullets",
+   "source": {
+    "pages": [
+     3
+    ]
+   },
+   "heading": "The three costs of inventory",
+   "items": [
+    {
+     "text": "**Ordering cost (S)**: placing and receiving one order",
+     "sub": "Paperwork, transport, inspection. Same whatever the order size.",
+     "at": 0
+    },
+    {
+     "text": "**Holding cost (H)**: keeping one unit for one year",
+     "sub": "Storage, insurance, obsolescence, cost of capital.",
+     "at": 1
+    },
+    {
+     "text": "**Shortage cost**: lost sales and goodwill",
+     "at": 2
+    }
+   ],
+   "callout": {
+    "title": "Think of a kirana store",
+    "supplementary": true,
+    "at": 3,
+    "text": "Order rice every day: many trips to the wholesaler. Order a year's rice at once: the back room is full and money is stuck in sacks."
+   },
+   "narration": [
+    "Your notes list three costs. First, the ordering cost, S. It is the cost of placing and receiving one order, and it stays the same whatever the order size.",
+    "Second, the holding cost, H. That is the cost of keeping one unit in stock for one year, such as storage, insurance and the money tied up in it.",
+    "Third, the shortage cost: the sales and goodwill you lose when you cannot meet demand.",
+    "Here is an everyday picture, which is my example, not from your notes. A kirana store that orders rice every day makes many trips to the wholesaler.",
+    "But a store that buys a whole year's rice at once fills its back room and locks up its cash."
+   ]
+  },
+  {
+   "id": "story",
+   "type": "roleplay",
+   "supplementary": true,
+   "setting": "store",
+   "characters": [
+    {
+     "name": "Ramesh, store owner",
+     "color": "blue"
+    },
+    {
+     "name": "Priya, supplier",
+     "color": "red"
+    }
+   ],
+   "lines": [
+    {
+     "who": 1,
+     "text": "Order a big lot this time, Ramesh. Fewer deliveries for you!",
+     "at": 0
+    },
+    {
+     "who": 0,
+     "text": "But then my godown is packed, and my money sits in sacks for months.",
+     "at": 1
+    },
+    {
+     "who": 1,
+     "text": "Small orders, then?",
+     "at": 2
+    },
+    {
+     "who": 0,
+     "text": "Then I pay for a delivery every few days. There must be a best size in between.",
+     "at": 3
+    }
+   ],
+   "narration": [
+    {
+     "text": "Order a big lot this time, Ramesh. Fewer deliveries for you!",
+     "voice": "af_heart"
+    },
+    "But then my godown is packed, and my money sits in sacks for months.",
+    {
+     "text": "Small orders, then?",
+     "voice": "af_heart"
+    },
+    "Then I pay for a delivery every few days. There must be a best size in between."
+   ]
+  },
+  {
+   "id": "sawtooth",
+   "type": "chart",
+   "source": {
+    "pages": [
+     4,
+     5
+    ]
+   },
+   "heading": "What one order size means for stock on hand",
+   "x": {
+    "label": "Working days",
+    "min": 0,
+    "max": 64
+   },
+   "y": {
+    "label": "Units in stock",
+    "min": 0,
+    "max": 800,
+    "ticks": [
+     0,
+     200,
+     400,
+     600,
+     800
+    ]
+   },
+   "series": [
+    {
+     "name": "Stock level",
+     "gen": {
+      "Q": "EOQ",
+      "T": "TBO",
+      "cycles": 4
+     },
+     "at": 0,
+     "drawTime": 3.0,
+     "labelAt": 0,
+     "labelAnchor": "start"
+    },
+    {
+     "name": "Average stock = Q/2",
+     "points": [
+      [
+       0,
+       "HALF"
+      ],
+      [
+       64,
+       "HALF"
+      ]
+     ],
+     "dash": true,
+     "color": "var(--accent2)",
+     "at": 2
+    }
+   ],
+   "notes": [
+    {
+     "text": "An order of **Q units** arrives, then demand uses it up steadily.",
+     "at": 0
+    },
+    {
+     "text": "Big Q: fewer orders in a year, so a lower **ordering cost**.",
+     "at": 1
+    },
+    {
+     "text": "Average stock is **Q/2**, so holding cost is **(Q/2) × H**.",
+     "at": 2
+    }
+   ],
+   "narration": [
+    "Let's picture this. When an order of Q units arrives, the stock jumps up, and steady demand uses it until the next order arrives.",
+    "A big Q means fewer orders a year, so the yearly ordering cost, D over Q times S, falls.",
+    "But on average you hold half the order, Q over two, so the holding cost is Q over two, times H. This graph uses the numbers from your example on page five."
+   ]
+  },
+  {
+   "id": "curves",
+   "type": "chart",
+   "source": {
+    "pages": [
+     4,
+     5
+    ]
+   },
+   "heading": "Two costs pulling in opposite directions",
+   "x": {
+    "label": "Order quantity Q (units)",
+    "min": 0,
+    "max": 1600
+   },
+   "y": {
+    "label": "Annual cost (₹)",
+    "min": 0,
+    "max": 50000
+   },
+   "series": [
+    {
+     "name": "Ordering cost (D/Q)·S",
+     "fn": "D/x*S",
+     "from": 120,
+     "to": 1600,
+     "at": 0,
+     "labelAt": 6,
+     "labelAnchor": "start",
+     "labelDx": 18,
+     "labelDy": 4
+    },
+    {
+     "name": "Holding cost (Q/2)·H",
+     "fn": "x/2*H",
+     "from": 0,
+     "to": 1600,
+     "at": 1,
+     "color": "var(--accent2)",
+     "labelDy": -16
+    },
+    {
+     "name": "Total cost",
+     "fn": "D/x*S + x/2*H",
+     "from": 240,
+     "to": 1600,
+     "at": 2,
+     "color": "var(--ink)",
+     "width": 7,
+     "labelDy": -22
+    }
+   ],
+   "marks": [
+    {
+     "x": "EOQ",
+     "y": "TC",
+     "label": "lowest total cost",
+     "at": 3
+    }
+   ],
+   "notes": [
+    {
+     "text": "Ordering cost **falls** as Q grows.",
+     "at": 0
+    },
+    {
+     "text": "Holding cost **rises** as Q grows.",
+     "at": 1,
+     "color": "var(--accent2)"
+    },
+    {
+     "text": "Total cost is lowest where the two are **equal**.",
+     "at": 3,
+     "color": "var(--ink)"
+    }
+   ],
+   "narration": [
+    "Now let's plot both costs against the order quantity. The blue ordering cost falls as Q grows, because you order fewer times.",
+    "The orange holding cost rises in a straight line, because you keep more stock.",
+    "Add them together and you get the total cost curve, shaped like a U.",
+    "Your notes point out that the bottom of this U is exactly where ordering cost equals holding cost. That best order size is called the economic order quantity."
+   ]
+  },
+  {
+   "id": "formula",
+   "type": "formula",
+   "source": {
+    "pages": [
+     4
+    ]
+   },
+   "heading": "The EOQ formula",
+   "latex": "EOQ = Q^* = \\sqrt{\\dfrac{2\\,\\htmlClass{t1}{D}\\,\\htmlClass{t2}{S}}{\\htmlClass{t3}{H}}}",
+   "terms": [
+    {
+     "sym": "D",
+     "label": "Annual demand, in units per year",
+     "at": 1
+    },
+    {
+     "sym": "S",
+     "label": "Ordering cost per order",
+     "at": 2
+    },
+    {
+     "sym": "H",
+     "label": "Holding cost per unit per year",
+     "at": 3
+    }
+   ],
+   "finalAt": 4,
+   "narration": [
+    "Setting ordering cost equal to holding cost and solving gives this formula. E O Q equals the square root of two D S over H.",
+    "D is the annual demand, how many units you sell in a year.",
+    "S is the cost of placing one order.",
+    "And H is the cost of holding one unit for a year. Notice H sits at the bottom, so costly storage means smaller orders.",
+    "Remember it as: square root of two times demand times ordering cost, divided by holding cost."
+   ]
+  },
+  {
+   "id": "calc1",
+   "type": "calc",
+   "source": {
+    "pages": [
+     5
+    ]
+   },
+   "heading": "Example 1: find the EOQ",
+   "given": [
+    {
+     "sym": "D",
+     "label": "Annual demand",
+     "value": "{{D}} units",
+     "at": 0
+    },
+    {
+     "sym": "S",
+     "label": "Cost per order",
+     "value": "₹{{S}}",
+     "at": 0
+    },
+    {
+     "sym": "H",
+     "label": "Holding cost / unit / year",
+     "value": "₹{{H}}",
+     "at": 0
+    }
+   ],
+   "steps": [
+    {
+     "note": "Write the formula",
+     "tex": "EOQ = \\sqrt{\\dfrac{2DS}{H}}",
+     "at": 1
+    },
+    {
+     "note": "Put in the numbers",
+     "tex": "EOQ = \\sqrt{\\dfrac{2 \\times {{D}} \\times {{S}}}{{{H}}}}",
+     "at": 2
+    },
+    {
+     "note": "Simplify inside the root",
+     "tex": "EOQ = \\sqrt{ {{X}} }",
+     "at": 3
+    }
+   ],
+   "result": {
+    "tex": "EOQ \\approx {{EOQ|2}} \\approx {{EOQ|0}}\\ \\text{units}",
+    "text": "the best order size",
+    "at": 4
+   },
+   "narration": [
+    "Let's solve Example 1 from page five. A distributor sells {{D}} units a year, each order costs ₹{{S}}, and holding one unit for a year costs ₹{{H}}.",
+    "Step one, write the formula.",
+    "Step two, substitute: two times {{D}} times {{S}}, divided by {{H}}.",
+    "Step three, simplify. Two times {{D}} times {{S}} is {{NUM}}, and dividing by {{H}} gives {{X}}.",
+    {
+     "text": "The square root of {{X}} is {{EOQ|2}}, so the distributor should order about {{EOQ|0}} units each time.",
+     "pause": 0.6
+    }
+   ]
+  },
+  {
+   "id": "calc2",
+   "type": "calc",
+   "source": {
+    "pages": [
+     5
+    ]
+   },
+   "heading": "Example 1: orders, timing and total cost",
+   "steps": [
+    {
+     "note": "Orders per year",
+     "tex": "N = \\dfrac{D}{Q^*} = \\dfrac{ {{D}} }{ {{EOQ|2}} } = {{N|2}} \\approx 19",
+     "at": 0
+    },
+    {
+     "note": "Time between orders (300 working days)",
+     "tex": "\\dfrac{ {{WD}} }{ {{N|2}} } = {{TBO|1}} \\approx 16\\ \\text{days}",
+     "at": 1
+    },
+    {
+     "note": "Annual ordering cost",
+     "tex": "\\dfrac{ {{D}} }{ {{EOQ|2}} } \\times {{S}} = {{OC|2}}",
+     "at": 2
+    },
+    {
+     "note": "Annual holding cost",
+     "tex": "\\dfrac{ {{EOQ|2}} }{2} \\times {{H}} = {{HC|2}}",
+     "at": 3
+    }
+   ],
+   "result": {
+    "tex": "TC = ₹{{TC|2}}",
+    "text": "ordering cost = holding cost, as the theory says",
+    "at": 4
+   },
+   "narration": [
+    "Now the rest of the example. Orders per year, N, is demand divided by the EOQ: {{D}} divided by {{EOQ|2}} gives {{N|2}}, so about 19 orders.",
+    "With 300 working days, that is one order every {{TBO|1}} days, roughly every 16 working days.",
+    "The yearly ordering cost is {{N|2}} orders times ₹{{S}}, which is ₹{{OC|2}}.",
+    "The holding cost is half of {{EOQ|2}}, times ₹{{H}}, which is also ₹{{HC|2}}.",
+    {
+     "text": "So the total annual cost is ₹{{TC|2}}. And as your notes say, at the EOQ the two costs are exactly equal.",
+     "pause": 0.6
+    }
+   ]
+  },
+  {
+   "id": "recap",
+   "type": "bullets",
+   "variant": "recap",
+   "source": {
+    "pages": [
+     3,
+     4,
+     5
+    ]
+   },
+   "heading": "Remember",
+   "items": [
+    {
+     "text": "Ordering cost is per order; holding cost is per unit per year",
+     "at": 0
+    },
+    {
+     "text": "Total cost $TC = \\frac{D}{Q}S + \\frac{Q}{2}H$ is lowest where the two costs are equal",
+     "at": 1
+    },
+    {
+     "text": "$EOQ = \\sqrt{2DS/H}$",
+     "at": 2
+    },
+    {
+     "text": "Example 1: order **{{EOQ|0}} units**, about **19 times** a year, total cost **₹{{TC|2}}**",
+     "at": 3
+    }
+   ],
+   "narration": [
+    "Let's recap. Ordering cost is paid per order, and holding cost per unit per year.",
+    "The total cost is lowest where these two costs are equal.",
+    "That point is the E O Q, the square root of two D S over H.",
+    "In our example, the distributor orders {{EOQ|0}} units, about 19 times a year, for a total cost of ₹{{TC|2}}. In the next lesson, we'll see when to place each order."
+   ]
+  }
+ ]
+}

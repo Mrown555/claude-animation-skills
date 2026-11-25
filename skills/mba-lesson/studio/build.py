@@ -14,9 +14,14 @@ from common import ENGINE, MAX_WORKERS, die, digest, load, node_env, run, save, 
 SRT_T = lambda s: f'{int(s // 3600):02d}:{int(s % 3600 // 60):02d}:{int(s % 60):02d},{int(round(s % 1 * 1000)) % 1000:03d}'  # noqa: E731
 
 
-def engine_hash():
-    files = sorted(list(ENGINE.glob('*.js')) + list(ENGINE.glob('*.css')) + list(ENGINE.glob('*.html')) + list((ENGINE / 'scenes').glob('*.js')))
-    return digest([f.read_text() for f in files])
+SCENE_FILE = {'title': 'basic', 'concept': 'basic', 'bullets': 'basic', 'table': 'basic', 'formula': 'formula', 'calc': 'formula',
+              'chart': 'chart', 'process': 'diagram', 'matrix': 'diagram', 'roleplay': 'roleplay'}
+
+
+def engine_hash(kind):
+    """cache key part: the engine core plus only the module that draws this scene type"""
+    files = [ENGINE / 'engine.js', ENGINE / 'theme.css', ENGINE / 'index.html', ENGINE / 'render.js', ENGINE / 'scenes' / f'{SCENE_FILE.get(kind, kind)}.js']
+    return digest([f.read_text() for f in files if f.exists()])
 
 
 def prepare(p, spec_path, lang):
@@ -37,10 +42,9 @@ def prepare(p, spec_path, lang):
 
 
 def render_scenes(p, lid, data, work):
-    eh = engine_hash()
     todo = []
     for i, sc in enumerate(data['scenes']):
-        h = digest([sc, eh, data['theme'], data['lesson']])
+        h = digest([sc, engine_hash(sc['spec']['type']), data['theme'], data['lesson']])
         tag = work / 'scenes' / f's{i:02d}'
         if (tag.with_suffix('.mp4')).exists() and (tag.with_suffix('.hash')).exists() and tag.with_suffix('.hash').read_text() == h:
             continue

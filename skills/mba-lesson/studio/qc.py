@@ -24,7 +24,7 @@ class Report:
         return 'FAIL' if 'FAIL' in lv else 'WARN' if 'WARN' in lv else 'PASS'
 
 
-def strings(o, skip=('narration', 'narration_hi', 'type', 'id', 'color', 'voice', 'setting', 'gen', 'fn', 'source')):
+def strings(o, skip=('narration', 'narration_hi', 'type', 'id', 'color', 'voice', 'setting', 'gen', 'fn', 'source', 'widths', 'size', 'delay', 'at', 'drawTime', 'width', 'labelDx', 'labelDy', 'dx', 'dy')):
     if isinstance(o, dict):
         for k, v in o.items():
             if k not in skip:

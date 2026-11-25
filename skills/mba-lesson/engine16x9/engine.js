@@ -103,7 +103,10 @@
       if (e.scrollHeight > e.clientHeight + 3 || e.scrollWidth > e.clientWidth + 3) {
         if (getComputedStyle(e).overflow !== 'visible' || e.dataset.fit) out.push({ kind: 'overflow', el: name(e) });
       }
-      const fs = parseFloat(getComputedStyle(e).fontSize); if (fs < 22) out.push({ kind: 'small-text', el: name(e), px: fs });
+      // smallest font that actually carries text inside this element (KaTeX sub/superscripts excluded)
+      let fs = 1e9; const tw = document.createTreeWalker(e, NodeFilter.SHOW_TEXT);
+      for (let n = tw.nextNode(); n; n = tw.nextNode()) { if (!n.textContent.trim() || n.parentElement.closest('.msupsub')) continue; fs = Math.min(fs, parseFloat(getComputedStyle(n.parentElement).fontSize)); }
+      if (fs < 22) out.push({ kind: 'small-text', el: name(e), px: fs });
     }
     for (let a = 0; a < els.length; a++) for (let b = a + 1; b < els.length; b++) {
       const A = els[a], B = els[b]; if (A.contains(B) || B.contains(A)) continue;

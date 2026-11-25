@@ -32,7 +32,7 @@ table{{border-collapse:collapse;width:100%;margin:8px 0}} td,th{{border:1px soli
 th{{background:#eef6f6}} .pg{{color:#0e7c86;font-size:9pt;white-space:nowrap}} .supp{{color:#b4531f;font-size:9pt;font-weight:600}}
 .box{{background:#f6f4ef;border-left:4px solid #0e7c86;padding:8px 12px;margin:8px 0}} .f{{font-size:14pt;padding:6px 0}}
 .q{{margin:12px 0;page-break-inside:avoid}} .tag{{display:inline-block;background:#eef6f6;color:#0e7c86;border-radius:9px;padding:0 8px;font-size:9pt}}
-li{{margin:2px 0}}
+li{{margin:2px 0}} tr,.box{{page-break-inside:avoid}} h2,h3{{page-break-after:avoid}} table{{page-break-inside:auto}}
 </style></head><body><h1>{E(title)}</h1><div class="sub">{E(subtitle)}</div>{body}
 <script src="{k}/katex.min.js"></script>
 <script>document.querySelectorAll('.tex').forEach(e=>katex.render(e.textContent,e,{{throwOnError:false,displayMode:e.classList.contains('d')}}))</script>
