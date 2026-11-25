@@ -39,3 +39,25 @@ body{font-family:'Inter',sans-serif;color:var(--ink);-webkit-font-smoothing:anti
 .hl{color:var(--accent);font-weight:700}
 .katex{font-size:1.15em}
 .dot{display:inline-block;width:16px;height:16px;border-radius:50%;background:var(--accent);margin-right:18px;flex:none;transform:translateY(-4px)}
+
+/* ---- style: kurzgesagt (flat vector space look: deep navy-purple, glowing planet, bright accents). Not affiliated. ---- */
+@font-face{font-family:'Poppins';font-weight:600;src:url(/kit/fonts/poppins-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:'Poppins';font-weight:700;src:url(/skills/stick-figure/engine/template/web/fonts/Poppins-Bold.ttf)}
+#bgfx{position:absolute;inset:0}
+#stage{background:var(--stage-bg,var(--bg))}
+:root[data-style="kurzgesagt"]{
+  --bg:#120a38; --stage-bg:linear-gradient(180deg,#1a1050 0%,#0f0838 100%);
+  --paper:#261b66; --ink:#ffffff; --mute:#c3bdee; --line:rgba(255,255,255,.16);
+  --accent:#38d9f5; --accent2:#ff8a4c; --accent3:#b08cff; --good:#4be3a0; --bad:#ff5d8f;
+  --soft:rgba(56,217,245,.14); --sub-bg:rgba(8,5,34,.84);
+  --on-accent:#140c3f; --th0:#3b2a8f; --hl:rgba(255,210,63,.16);
+  --rp-wall:#d9d2ff; --rp-floor:#b3a8ea; --rp-window:#ffffff; --rp-frame:#5a43c8; --rp-desk:#8c6ad8; --rp-shelf:#7a5fd0; --rp-crate:#ff8a4c;
+}
+:root[data-style="kurzgesagt"] .card{background:var(--paper);border:2px solid rgba(255,255,255,.08);box-shadow:0 14px 44px rgba(3,0,28,.45)}
+:root[data-style="kurzgesagt"] .h1,:root[data-style="kurzgesagt"] .h2{font-family:'Poppins','Inter',sans-serif;font-weight:700;letter-spacing:-.01em}
+:root[data-style="kurzgesagt"] .kicker,:root[data-style="kurzgesagt"] .pill{font-family:'Poppins','Inter',sans-serif;font-weight:600}
+:root[data-style="kurzgesagt"] .pill{background:var(--accent);color:#140c3f}
+:root[data-style="kurzgesagt"] #sourceTag{background:rgba(56,217,245,.16);color:var(--accent)}
+:root[data-style="kurzgesagt"] #sourceTag.supp{background:rgba(255,138,76,.2);color:#ffb27a}
+:root[data-style="kurzgesagt"] #lessonTag{color:#9f98d8}
+:root[data-style="kurzgesagt"] .hl{color:#ffd23f}

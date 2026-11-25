@@ -4,15 +4,16 @@
   const { h, rich, reveal, reg, cl } = STUDIO;
   const Q = (el, tag) => { el.dataset.qc = tag; return el; };
   const CW = 1728, CH = 790, FLOOR = 690;
-  function setting(c, kind) {
-    c.fillStyle = '#efe9df'; c.fillRect(0, 0, CW, CH);
-    c.fillStyle = '#e2d9cb'; c.fillRect(0, FLOOR - 10, CW, CH - FLOOR + 10);
+  const cv_ = n => (getComputedStyle(document.documentElement).getPropertyValue(n) || '').trim();
+  function setting(c, kind, P) {
+    c.fillStyle = P.wall; c.fillRect(0, 0, CW, CH);
+    c.fillStyle = P.floor; c.fillRect(0, FLOOR - 10, CW, CH - FLOOR + 10);
     if (kind === 'office' || kind === 'store') {
-      c.fillStyle = '#cfe3ee'; c.fillRect(660, 70, 410, 260); c.strokeStyle = '#2a3242'; c.lineWidth = 8; c.strokeRect(660, 70, 410, 260);
+      c.fillStyle = P.window; c.fillRect(660, 70, 410, 260); c.strokeStyle = P.frame; c.lineWidth = 8; c.strokeRect(660, 70, 410, 260);
       c.beginPath(); c.moveTo(865, 70); c.lineTo(865, 330); c.stroke();
     }
-    if (kind === 'office') { c.fillStyle = '#b98a5e'; c.fillRect(640, 560, 450, 30); c.fillRect(670, 590, 24, 150); c.fillRect(1036, 590, 24, 150); }
-    if (kind === 'store') { c.fillStyle = '#c9a274'; for (let k = 0; k < 3; k++) { c.fillRect(700, 420 + k * 100, 340, 18); } c.fillStyle = '#e2763a'; for (let k = 0; k < 9; k++) c.fillRect(712 + (k % 3) * 110, 372 + Math.floor(k / 3) * 100, 70, 48); }
+    if (kind === 'office') { c.fillStyle = P.desk; c.fillRect(640, 560, 450, 30); c.fillRect(670, 590, 24, 150); c.fillRect(1036, 590, 24, 150); }
+    if (kind === 'store') { c.fillStyle = P.shelf; for (let k = 0; k < 3; k++) { c.fillRect(700, 420 + k * 100, 340, 18); } c.fillStyle = P.crate; for (let k = 0; k < 9; k++) c.fillRect(712 + (k % 3) * 110, 372 + Math.floor(k / 3) * 100, 70, 48); }
   }
   // plain office clothes: one solid colour, no pirate hat (the rig's default)
   const solid = c => { const k = (PAL[c] || [c])[0]; return [k, k]; };
@@ -20,10 +21,11 @@
     const a = ctx.area();
     const cv = h('canvas', { width: CW, height: CH, style: { position: 'absolute', left: 0, top: 0, borderRadius: '24px' } }); a.append(cv);
     const c = cv.getContext('2d');
+    const P = { wall: cv_('--rp-wall') || '#efe9df', floor: cv_('--rp-floor') || '#e2d9cb', window: cv_('--rp-window') || '#cfe3ee', frame: cv_('--rp-frame') || '#2a3242', desk: cv_('--rp-desk') || '#b98a5e', shelf: cv_('--rp-shelf') || '#c9a274', crate: cv_('--rp-crate') || '#e2763a' };
     const chars = (sp.characters || []).slice(0, 2).map((ch, i) => ({
       name: ch.name, x: i === 0 ? 380 : 1350, flip: i === 0 ? 1 : -1, cols: solid(ch.color || (i === 0 ? 'blue' : 'red')),
     }));
-    const tags = chars.map(ch => { const tg = Q(h('div', { class: 'pill', text: ch.name, style: { position: 'absolute', left: ch.x - 170 + 'px', width: '340px', textAlign: 'center', top: FLOOR + 14 + 'px', background: '#fff', color: 'var(--ink)' } }), 'name'); a.append(tg); return tg; });
+    const tags = chars.map(ch => { const tg = Q(h('div', { class: 'pill', text: ch.name, style: { position: 'absolute', left: ch.x - 170 + 'px', width: '340px', textAlign: 'center', top: FLOOR + 14 + 'px', background: 'var(--paper)', color: 'var(--ink)' } }), 'name'); a.append(tg); return tg; });
     const sent = ctx.timing.sent;
     const lines = (sp.lines || []).map((ln, k) => {
       const who = ln.who || 0, ch = chars[who];
@@ -36,7 +38,7 @@
     ctx.loop();                                     // idle motion: every frame changes
     const ph = ctx.tw(.2, .6);
     return t => {
-      setting(c, sp.setting || 'office');
+      setting(c, sp.setting || 'office', P);
       chars.forEach((ch, i) => {
         const talking = lines.some(l => l.who === i && t >= l.s0 && t < l.talkEnd);
         const mouth = talking ? (Math.floor(t * 9 + i) % 2 ? 'o' : 'smile') : (sp.mood && sp.mood[i]) || 'smile';

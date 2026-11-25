@@ -63,9 +63,9 @@
     const cols = sp.columns || [];
     const grid = h('div', { style: { marginTop: '40px', display: 'grid', gridTemplateColumns: (sp.widths || cols.map(() => '1fr')).join(' '), background: 'var(--paper)', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 10px 40px rgba(27,35,51,.08)' } });
     const fs = (sp.rows || []).length > 5 ? '26px' : '30px';
-    cols.forEach((c, j) => grid.append(Q(h('div', { html: rich(c), style: { padding: '20px 26px', font: "700 28px 'Inter'", background: j === 0 ? 'var(--ink)' : 'var(--accent)', color: '#fff' } }), 'th')));
+    cols.forEach((c, j) => grid.append(Q(h('div', { html: rich(c), style: { padding: '20px 26px', font: "700 28px 'Inter'", background: j === 0 ? 'var(--th0,var(--ink))' : 'var(--accent)', color: 'var(--on-accent,#fff)' } }), 'th')));
     const rows = (sp.rows || []).map((r, n) => {
-      const cells = r.cells.map((c, j) => Q(h('div', { html: rich(c), style: { padding: '18px 26px', font: `${j === 0 ? 700 : 500} ${fs}/1.3 'Inter'`, borderTop: '1px solid var(--line)', background: r.highlight ? '#fff6e9' : '' } }), 'td'));
+      const cells = r.cells.map((c, j) => Q(h('div', { html: rich(c), style: { padding: '18px 26px', font: `${j === 0 ? 700 : 500} ${fs}/1.3 'Inter'`, borderTop: '1px solid var(--line)', background: r.highlight ? 'var(--hl,#fff6e9)' : '' } }), 'td'));
       cells.forEach(c => grid.append(c)); return [cells, ctx.tw(ctx.cue(r, n), .5)];
     });
     a.append(grid);

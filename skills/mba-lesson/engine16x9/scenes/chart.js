@@ -56,7 +56,7 @@
       const grp = s('g', {}, svg);
       const yv = m.y != null ? m.y : Y.min;
       s('line', { x1: px(m.x), x2: px(m.x), y1: py(yv), y2: py(Y.min), stroke: 'var(--ink)', 'stroke-width': 3, 'stroke-dasharray': '6 8' }, grp);
-      s('circle', { cx: px(m.x), cy: py(yv), r: 12, fill: 'var(--ink)', stroke: '#fff', 'stroke-width': 4 }, grp);
+      s('circle', { cx: px(m.x), cy: py(yv), r: 12, fill: 'var(--ink)', stroke: 'var(--bg)', 'stroke-width': 4 }, grp);
       const lb = s('text', { x: px(m.x) + (m.dx || 0), y: py(yv) - 26 + (m.dy || 0), 'text-anchor': 'middle', style: "font:700 28px 'Inter';fill:var(--ink)" }, grp);
       lb.textContent = m.label || ''; lb.dataset.qc = 'mark';
       return { grp, p: ctx.tw(ctx.cue(m, 1), .6, 'back') };

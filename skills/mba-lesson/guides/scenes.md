@@ -44,3 +44,6 @@ Colours: `var(--accent)` teal, `var(--accent2)` orange, `var(--accent3)` indigo,
 - **HR / OB:** `roleplay` (interviews, appraisals, conflicts), `process` (recruitment), `table` (theories compared).
 
 Keep one idea per scene (30 to 70 s). Mix types: never more than two text-only scenes in a row.
+
+## Visual styles
+`project.json` → `"style": "clean"` (default, light) or `"style": "kurzgesagt"` (flat-vector space look: navy-purple sky, stars, a glowing planet, bright accents; inspired by the style, not affiliated). The style only changes colours, fonts and the background; every scene type works in both. Scene colours should use the theme variables (`var(--accent)`, `var(--paper)`, ...), never hard-coded hex values, so new styles can be added in `theme.css` with one `:root[data-style="..."]` block.

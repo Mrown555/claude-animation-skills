@@ -116,11 +116,29 @@
     }
     return out;
   }
+  function space() {
+    const NS_ = 'http://www.w3.org/2000/svg'; let seed = 7;
+    const R = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+    let g = '';
+    for (let i = 0; i < 150; i++) { const x = R() * W, y = R() * H, r = .7 + R() * 1.9; g += `<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${r.toFixed(1)}" fill="${R() > .45 ? '#fff' : '#b9a6ff'}" opacity="${(.25 + R() * .4).toFixed(2)}"/>`; }
+    const spark = (x, y, s) => `<path d="M${x},${y - s} Q${x},${y} ${x + s},${y} Q${x},${y} ${x},${y + s} Q${x},${y} ${x - s},${y} Q${x},${y} ${x},${y - s}Z" fill="#fff" opacity=".8"/>`;
+    g += spark(150, 980, 16) + spark(1840, 70, 14) + spark(1020, 1040, 11) + spark(60, 520, 12) + spark(1880, 520, 12);
+    const bands = [-210, -120, -30, 70, 160, 250].map((y, i) => `<rect x="-340" y="${y}" width="680" height="${i % 2 ? 34 : 54}" fill="${i % 2 ? '#8a64ff' : '#4d2fb8'}" opacity=".7"/>`).join('');
+    document.getElementById('bgfx').innerHTML = `<svg xmlns="${NS_}" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+      <defs><radialGradient id="haze1" cx="20%" cy="15%" r="60%"><stop offset="0" stop-color="#5b2fd0" stop-opacity=".35"/><stop offset="1" stop-color="#5b2fd0" stop-opacity="0"/></radialGradient>
+      <radialGradient id="halo"><stop offset=".68" stop-color="#8c5cff" stop-opacity=".38"/><stop offset="1" stop-color="#8c5cff" stop-opacity="0"/></radialGradient>
+      <clipPath id="pc"><circle r="330"/></clipPath>
+      <mask id="night"><rect x="-400" y="-400" width="800" height="800" fill="#fff"/><circle cx="75" r="330" fill="#000"/></mask></defs>
+      <rect width="${W}" height="${H}" fill="url(#haze1)"/>${g}
+      <g transform="translate(1660,1175)"><circle r="480" fill="url(#halo)"/><circle r="330" fill="#6c47e0"/>
+        <g clip-path="url(#pc)">${bands}<circle r="330" fill="#140c46" opacity=".6" mask="url(#night)"/></g></g></svg>`;
+  }
   function init() {
     const a = window.LESSON.theme || {};
+    const style = window.LESSON.style || 'clean'; document.documentElement.dataset.style = style; if (style === 'kurzgesagt') space();
     for (const [k, v] of Object.entries(a)) document.documentElement.style.setProperty('--' + k, v);
     window.STUDIO.ready = document.fonts.ready.then(async () => {
-      await Promise.all(['500 30px Inter', '600 30px Inter', '700 30px Inter', '700 30px "Inter Tight"', '800 30px "Inter Tight"', '500 30px "JetBrains Mono"', '30px KaTeX_Main', 'italic 30px KaTeX_Math'].map(f => document.fonts.load(f)));
+      await Promise.all(['500 30px Inter', '600 30px Inter', '700 30px Inter', '700 30px "Inter Tight"', '700 30px Poppins', '600 30px Poppins', '800 30px "Inter Tight"', '500 30px "JetBrains Mono"', '30px KaTeX_Main', 'italic 30px KaTeX_Math'].map(f => document.fonts.load(f)));
       return true;
     });
   }

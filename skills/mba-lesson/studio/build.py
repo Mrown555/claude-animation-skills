@@ -86,7 +86,7 @@ def lesson(p, spec_path, lang='en', stills=None):
     outline = load(p.outline)
     order = [les['id'] for les in outline['lessons']]
     data = {'lesson': {'id': lid, 'title': filled['title'], 'index': order.index(lid) + 1 if lid in order else 1, 'total': len(order)},
-            'theme': p.meta.get('theme', {}), 'scenes': scenes}
+            'theme': p.meta.get('theme', {}), 'style': p.meta.get('style', 'clean'), 'scenes': scenes}
     (work / 'lesson-data.js').write_text('window.LESSON = ' + json.dumps(data, ensure_ascii=False) + ';\n', encoding='utf-8')
     save(work / 'filled.json', {'spec': filled, 'vars': vars_out})
     if stills is not None:
