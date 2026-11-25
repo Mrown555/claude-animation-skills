@@ -1,0 +1,67 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+body{font-family:'DejaVu Serif',Georgia,serif;font-size:12.5pt;line-height:1.5;color:#111}
+.pg{page-break-after:always;min-height:240mm}
+h1{font-size:24pt;margin-top:60mm;text-align:center} h2{font-size:16pt;border-bottom:1px solid #444} .c{text-align:center}
+table{border-collapse:collapse;margin:8px 0} td,th{border:1px solid #555;padding:4px 10px}
+.f{font-family:'DejaVu Sans Mono',monospace;background:#f2f2f2;padding:6px 10px;display:inline-block}
+.note{font-size:9pt;color:#555}
+</style></head><body>
+<div class="pg">
+<h1>Operations Management<br>Unit 3: Inventory Management</h1>
+<p class="c">Lecture notes, MBA Semester II</p>
+<p class="c note">SYNTHETIC TEST DOCUMENT written for testing the MBA Animation Studio pipeline. Not a professor's material.</p>
+</div>
+<div class="pg">
+<h2>3.1 What is inventory?</h2>
+<p>Inventory is the stock of materials a firm holds to meet future demand. It includes raw materials, work-in-progress (WIP), finished goods and MRO supplies (maintenance, repair and operating items).</p>
+<p><b>Why firms hold inventory:</b> to meet anticipated demand, to decouple production stages, to protect against stock-outs, to take advantage of quantity discounts and to hedge against price increases.</p>
+<p><b>Inventory costs.</b></p>
+<ul><li><b>Ordering cost (S):</b> cost of placing and receiving one order (paperwork, transport, inspection). It does not depend on order size.</li>
+<li><b>Holding (carrying) cost (H):</b> cost of keeping one unit in stock for one year (storage, insurance, obsolescence, cost of capital).</li>
+<li><b>Shortage cost:</b> lost sales and goodwill when demand cannot be met.</li></ul>
+<p>Large orders mean fewer orders (low ordering cost) but more stock on hand (high holding cost). Small orders do the opposite. Inventory management balances these two costs.</p>
+</div>
+<div class="pg">
+<h2>3.2 Economic Order Quantity (EOQ) model</h2>
+<p><b>Assumptions:</b> demand is known and constant; lead time is known and constant; the whole order arrives at once; no quantity discounts; only ordering and holding costs are relevant; no shortages.</p>
+<p>Let D = annual demand (units), S = ordering cost per order, H = holding cost per unit per year, Q = order quantity.</p>
+<p>Annual ordering cost = (D / Q) × S &nbsp;&nbsp; Annual holding cost = (Q / 2) × H</p>
+<p>Total annual cost: <span class="f">TC = (D/Q)·S + (Q/2)·H</span></p>
+<p>Total cost is minimum where annual ordering cost equals annual holding cost. Solving gives</p>
+<p class="c"><span class="f">EOQ = Q* = √( 2DS / H )</span></p>
+<p>Number of orders per year N = D / Q* &nbsp;&nbsp; Time between orders = working days per year / N</p>
+</div>
+<div class="pg">
+<h2>3.3 Numerical example: EOQ</h2>
+<p><b>Example 1.</b> A distributor sells 12,000 units of a product per year. The cost of placing one order is ₹500 and the holding cost is ₹30 per unit per year. The firm works 300 days per year. Find the EOQ, the number of orders per year, the time between orders and the total annual cost.</p>
+<p><b>Solution.</b> D = 12,000 units, S = ₹500, H = ₹30.</p>
+<p>EOQ = √(2 × 12,000 × 500 / 30) = √400,000 = 632.46 ≈ 632 units</p>
+<p>N = 12,000 / 632.46 = 18.97 ≈ 19 orders per year</p>
+<p>Time between orders = 300 / 18.97 = 15.8 ≈ 16 working days</p>
+<p>TC = (12,000 / 632.46) × 500 + (632.46 / 2) × 30 = 9,486.83 + 9,486.83 = ₹18,973.67</p>
+<p>Note that at the EOQ the annual ordering cost equals the annual holding cost.</p>
+</div>
+<div class="pg">
+<h2>3.4 Reorder point (ROP) and safety stock</h2>
+<p>The reorder point is the inventory level at which a new order is placed.</p>
+<p class="c"><span class="f">ROP = d × L + SS</span></p>
+<p>where d = daily demand, L = lead time in days and SS = safety stock (extra stock kept to protect against uncertainty in demand or lead time).</p>
+<p><b>Example 2.</b> For the distributor in Example 1, daily demand d = 12,000 / 300 = 40 units. The lead time is 5 days and the firm keeps a safety stock of 60 units.</p>
+<p>ROP = 40 × 5 + 60 = 260 units. When stock falls to 260 units, a new order of 632 units is placed.</p>
+</div>
+<div class="pg">
+<h2>3.5 ABC analysis</h2>
+<p>ABC analysis classifies items by annual consumption value (annual demand × unit cost), following the Pareto principle.</p>
+<table><tr><th>Class</th><th>% of items</th><th>% of annual value</th><th>Control</th></tr>
+<tr><td>A</td><td>10–20%</td><td>70–80%</td><td>Tight control, frequent review</td></tr>
+<tr><td>B</td><td>about 30%</td><td>15–25%</td><td>Moderate control</td></tr>
+<tr><td>C</td><td>50–60%</td><td>5–10%</td><td>Simple control, bulk ordering</td></tr></table>
+<p><b>Limitation:</b> ABC looks only at value; a cheap item can still be critical (it may stop production), so firms combine ABC with VED (Vital, Essential, Desirable) analysis.</p>
+</div>
+<div class="pg">
+<h2>Summary and reading</h2>
+<ul><li>EOQ balances ordering and holding cost: Q* = √(2DS/H).</li><li>ROP = d × L + SS tells you when to order.</li><li>ABC analysis tells you where to focus control.</li></ul>
+<p>Suggested reading: any standard operations management textbook, chapter on inventory management.</p>
+</div>
+</body></html>

@@ -1,0 +1,41 @@
+/* Visual identity for MBA lessons. Fonts come from the repo's kit/fonts (SIL OFL). */
+@font-face{font-family:'Inter';font-weight:500;src:url(/kit/fonts/inter-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-weight:600;src:url(/kit/fonts/inter-600-normal.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-weight:700;src:url(/kit/fonts/inter-700-normal.woff2) format('woff2')}
+@font-face{font-family:'Inter Tight';font-weight:700;src:url(/kit/fonts/inter-tight-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:'Inter Tight';font-weight:800;src:url(/kit/fonts/inter-tight-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-weight:500;src:url(/kit/fonts/jetbrains-mono-latin-500-normal.woff2) format('woff2')}
+:root{
+  --bg:#f6f4ef; --paper:#ffffff; --ink:#1b2333; --mute:#5d6678; --line:#d9d5cc;
+  --accent:#0e7c86; --accent2:#e2763a; --accent3:#5b5bd6; --good:#2f9e5b; --bad:#d0453b;
+  --soft:#e7f2f2; --sub-bg:rgba(17,24,39,.86);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:var(--bg)}
+body{font-family:'Inter',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--bg)}
+/* content safe area: x 96..1824, y 110..900; subtitles live below y 915 */
+#scene{position:absolute;inset:0}
+.area{position:absolute;left:96px;top:110px;width:1728px;height:790px}
+#chrome{position:absolute;left:0;top:0;width:1920px;height:90px;pointer-events:none}
+#lessonTag{position:absolute;left:96px;top:34px;font:600 22px 'Inter';color:var(--mute);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;max-width:1100px;overflow:hidden;text-overflow:ellipsis}
+#lessonTag b{color:var(--accent);font-weight:700}
+#sourceTag{position:absolute;right:96px;top:28px;font:600 22px 'Inter';padding:8px 18px;border-radius:999px;background:var(--soft);color:var(--accent);white-space:nowrap}
+#sourceTag.supp{background:#fdeee4;color:#b4531f}
+#sourceTag:empty{display:none}
+#subs{position:absolute;left:0;right:0;top:930px;height:120px;display:flex;align-items:flex-start;justify-content:center}
+#subText{max-width:1560px;text-align:center;font:600 38px/1.32 'Inter';color:#fff;background:var(--sub-bg);padding:10px 26px;border-radius:14px}
+#subText:empty{display:none}
+#fade{position:absolute;inset:0;background:var(--bg);opacity:0;pointer-events:none}
+/* shared building blocks */
+.h1{font:800 64px/1.08 'Inter Tight';letter-spacing:-.02em}
+.h2{font:700 50px/1.1 'Inter Tight';letter-spacing:-.015em}
+.kicker{font:700 24px 'Inter';color:var(--accent);letter-spacing:.14em;text-transform:uppercase}
+.body{font:500 34px/1.38 'Inter'}
+.small{font:500 28px/1.35 'Inter';color:var(--mute)}
+.card{background:var(--paper);border-radius:24px;box-shadow:0 10px 40px rgba(27,35,51,.08),0 1px 0 rgba(27,35,51,.05);padding:36px 40px}
+.pill{display:inline-block;padding:6px 16px;border-radius:999px;font:700 22px 'Inter';background:var(--soft);color:var(--accent)}
+.mono{font-family:'JetBrains Mono',monospace}
+.hl{color:var(--accent);font-weight:700}
+.katex{font-size:1.15em}
+.dot{display:inline-block;width:16px;height:16px;border-radius:50%;background:var(--accent);margin-right:18px;flex:none;transform:translateY(-4px)}

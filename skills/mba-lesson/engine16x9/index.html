@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<!-- MBA Animation Studio 16:9 engine. Served by render.js: /engine/ = this folder, /kit/ = repo kit, /skills/ = repo skills, /work/ = render work dir -->
+<link rel="stylesheet" href="vendor/katex/katex.min.css">
+<link rel="stylesheet" href="theme.css">
+</head><body>
+<div id="stage">
+  <div id="scene"></div>
+  <div id="chrome">
+    <div id="lessonTag" data-qc="chrome"></div>
+    <div id="sourceTag" data-qc="chrome"></div>
+  </div>
+  <div id="subs"><span id="subText"></span></div>
+  <div id="fade"></div>
+</div>
+<script src="vendor/katex/katex.min.js"></script>
+<!-- reused unchanged from the original stick-figure skill (MIT, Artem Novitckii) -->
+<script src="/skills/stick-figure/engine/template/web/lib.js"></script>
+<script src="/skills/stick-figure/engine/template/web/chars.js"></script>
+<script src="engine.js"></script>
+<script src="scenes/basic.js"></script>
+<script src="scenes/formula.js"></script>
+<script src="scenes/chart.js"></script>
+<script src="scenes/diagram.js"></script>
+<script src="scenes/roleplay.js"></script>
+<script src="/work/lesson-data.js"></script>
+<script>STUDIO.init();</script>
+</body></html>
