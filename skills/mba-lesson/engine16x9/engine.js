@@ -105,7 +105,7 @@
       }
       // smallest font that actually carries text inside this element (KaTeX sub/superscripts excluded)
       let fs = 1e9; const tw = document.createTreeWalker(e, NodeFilter.SHOW_TEXT);
-      for (let n = tw.nextNode(); n; n = tw.nextNode()) { if (!n.textContent.trim() || n.parentElement.closest('.msupsub')) continue; fs = Math.min(fs, parseFloat(getComputedStyle(n.parentElement).fontSize)); }
+      for (let n = tw.nextNode(); n; n = tw.nextNode()) { if (!n.textContent.replace(/[\s\u200b\u00a0]/g, '') || n.parentElement.closest('.msupsub, .vlist-s')) continue; fs = Math.min(fs, parseFloat(getComputedStyle(n.parentElement).fontSize)); }
       if (fs < 22) out.push({ kind: 'small-text', el: name(e), px: fs });
     }
     for (let a = 0; a < els.length; a++) for (let b = a + 1; b < els.length; b++) {
